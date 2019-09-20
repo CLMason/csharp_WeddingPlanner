@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+@model Wedding
+
+<div class="jumbotron">
+    <h1>Welcome to the Wedding Planner</h1>
+    <a href="/logout">Logout</a>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Wedding</th>
+      <th scope="col">Date</th>
+      <th scope="col">Guest</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var wedding in ViewBag.AllWeddings)
+    {
+    <tr>
+        <td><a href="/ViewWedding/@wedding.WeddingId">@wedding.NameOne and @wedding.NameTwo</a></td>
+        <td>@wedding.Date</td>
+        <td>@wedding.Attendees.Count</td>
+        <td>
+            @if(wedding.UserId ==ViewBag.UserId)
+            {
+                <a href="/cancel/@wedding.WeddingId" class="btn btn-warning">Cancel</a>
+            }
+            else
+            {
+                bool IsGoing = false;
+                foreach(var guest in wedding.Attendees)
+                {
+                    if(guest.UserId == ViewBag.UserId){
+                        IsGoing=true;
+                    }
+                }
+                if (IsGoing)
+                {
+                    <a class="btn btn-success" href="/leave/@wedding.WeddingId">Un-RSVP</a>
+                }
+                else
+                {
+                    <a class="btn btn-danger" href="/rsvp/@wedding.WeddingId">rsvp</a>    
+                }
+                
+            }
+        </td>    
+            
+    </tr>
+    }
+  </tbody>
+</table>
+
+<a href="/new">New Wedding</a>

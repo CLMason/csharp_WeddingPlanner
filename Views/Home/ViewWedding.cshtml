@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "View Wedding";
+}
+<div class="jumbotron">
+    <h1>View wedding!</h1>
+    <a href="/dashboard">Home</a>
+    <a href="/logout">Logout</a>
+</div>
+<div>
+    <ul>
+        <h3>
+            @ViewBag.ThisWedding.NameOne and @ViewBag.ThisWedding.NameTwo's Wedding
+        </h3>
+        <h3>
+            @ViewBag.ThisWedding.Date
+        </h3>
+        <h3>
+            @ViewBag.ThisWedding.Address
+        </h3>
+        @foreach(var guests in ViewBag.ThisWedding.Attendees){
+            <h3>
+                @guests.User.FirstName @guests.User.LastName
+            </h3>
+        }
+        
+        
+    </ul>
+</div>
